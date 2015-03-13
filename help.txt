@@ -1,0 +1,24 @@
+Yii Trace
+$a = new array(1,2,3);
+Yii::trace(CVarDumper::dumpAsString($a));
+------------------------------------------------------------
+Yii Session guide
+
+For creating yii session
+
+Yii::app()->session['userid'] = "value";
+You can get value like this
+
+$sleep = Yii::app()->session['userid'];
+And unset session like
+
+unset(Yii::app()->session['userid']); # Remove the session
+In case of user signs out , you have to remove all the session.
+
+Yii::app()->session->clear();
+After this, you need to remove actual data from server
+
+Yii::app()->session->destroy();
+
+
+
