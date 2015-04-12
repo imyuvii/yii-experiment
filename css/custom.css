@@ -17,3 +17,15 @@ Rounded Portlets
 	border-radius: 0px 0px 4px 4px !important;
 }
 */
+label.error{
+	color: #a94442;
+	padding: 3px 0px;
+}
+
+#form2 .elements{
+	text-align: center;
+}
+
+.ui-datepicker {
+	z-index: 100000 !important;
+}

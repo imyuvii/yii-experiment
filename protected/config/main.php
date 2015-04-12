@@ -17,6 +17,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'ext.rezvan.*'
 		// 'ext.select2.Select2'
 	),
 
@@ -40,19 +41,21 @@ return array(
 		),
 
 		// uncomment the following to enable URLs in path-format
-		/*
+
 		'urlManager'=>array(
 			'urlFormat'=>'path',
+			'showScriptName'=>true,
 			'rules'=>array(
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+				'<type:\w+>s'=>'article/index'
 			),
 		),
-		*/
+
 
 		// database settings are configured in database.php
-		'db'=>require(dirname(__FILE__).'/database.php'),
+		//'db'=>require(dirname(__FILE__).'/database.php'),
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors

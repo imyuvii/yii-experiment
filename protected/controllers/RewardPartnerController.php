@@ -63,26 +63,33 @@ class RewardPartnerController extends Controller
 
 	public function actionRegister()
 	{
-		$model=new rewardPartner;
+		//$model=new rewardPartner;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['formData']))
+		if($_POST)
 		{
-			$requestParams = array();
-			foreach($_POST['formData'] as $data){
+			//echo $requestParams =  CJSON::encode($_POST);
+			//exit;
+			/*foreach($_POST['formData'] as $data){
 				$name = $data['name'];
 				$value = $data['value'];
 				$requestParams[$name] = $value;
-			}
+			}*/
 
 			//$model->attributes=$_POST['rewardPartner'];
-			$params = json_encode($requestParams);
+			//$params = json_encode($requestParams);
+			$params = CJSON::encode($_POST);
 			$response = json_decode(ServiceHelper::serviceCall($params,'registerRewardPartner'));
 			if($response->result==true){
 				//$this->redirect(array('view','id'=>'123'));
 			} else {
-				echo print_r($response);
+				$this->render('create',array(
+					//'model'=>$model,
+					'errorCode'=>$response->errorCode,
+					'errorDescription'=>$response->errorDescription
+				));
+				//echo print_r($response);
 				//echo 'There is an error with page';
 				//$this->redirect(array('view','id'=>'123'));
 			}
@@ -91,7 +98,9 @@ class RewardPartnerController extends Controller
 				$this->redirect(array('view','id'=>$model->id));*/
 		} else {
 			$this->render('create',array(
-				'model'=>$model,
+				//'model'=>$model,
+				'errorCode'=>'',
+				'errorDescription'=>''
 			));
 		}
 	}

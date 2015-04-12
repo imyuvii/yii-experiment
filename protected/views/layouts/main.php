@@ -14,6 +14,7 @@
 		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/themes/default.css');
 		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/custom.css');
 		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/components-rounded.css');
+		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css');
 	?>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -42,7 +43,6 @@
 							'items'=>array(
 								array('label'=>'<i class="icon-user"></i> My Profile', 'url'=>array('/reports/')),
 								array('label'=>'<i class="icon-key"></i> Change Password', 'url'=>array('/locations/')),
-								array('label'=>'<i class="icon-users"></i><span class="title">Team</span>', 'url'=>array('/team/')),
 								array('label'=>'<i class="icon-power"></i> Log out', 'url'=>array('/rewardPartner/logout')),
 								//array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 								//array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
@@ -63,14 +63,15 @@
 	<div class="page-container">
 		<div class="page-sidebar-wrapper">
 			<div class="page-sidebar navbar-collapse collapse">
-				<?php $this->widget('zii.widgets.CMenu',array(
+				<?php
+				$this->widget('zii.widgets.CMenu',array(
 					'items'=>array(
 						/*array('label'=>'<i class="icon-home"></i><span class="title">Dashboard</span>', 'url'=>array('/site/index')),*/
-						array('label'=>'<i class="icon-flag"></i><span class="title">Campaigns</span><span class="selected"></span>', 'url'=>array('/campaigns/current')),
-						array('label'=>'<i class="icon-docs"></i><span class="title">Reports</span>', 'url'=>array('/reports/')),
-						array('label'=>'<i class="icon-pointer"></i><span class="title">Locations</span>', 'url'=>array('/locations/')),
-						array('label'=>'<i class="icon-users"></i><span class="title">Team</span>', 'url'=>array('/team/')),
-						array('label'=>'<i class="icon-note"></i><span class="title">Invoices</span>', 'url'=>array('/invoices/')),
+						array('label'=>ServiceHelper::cMenuName('Campaigns'), 'url'=>array('/campaigns/current')),
+						array('label'=>ServiceHelper::cMenuName('Reports'), 'url'=>array('/reports/index')),
+						array('label'=>ServiceHelper::cMenuName('Locations'), 'url'=>array('/locations/index')),
+						array('label'=>ServiceHelper::cMenuName('Team'), 'url'=>array('/team/index')),
+						array('label'=>ServiceHelper::cMenuName('Invoices'), 'url'=>array('/invoices/index')),
 						//array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 						//array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 					),
@@ -125,10 +126,17 @@
 		</div>
 	</div>
 	<?php
-		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/jquery.min.js',CClientScript::POS_END);
+		//Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/jquery.min.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap/js/bootstrap.min.js',CClientScript::POS_END);
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/jquery-validation/dist/jquery.validate.min.js',CClientScript::POS_END);
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/moment.min.js',CClientScript::POS_END);
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/daterangepicker.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/functions.js',CClientScript::POS_END);
 	?>
 </div>
 </body>
 </html>
+<?php
+Yii::trace('Reward Parner _id: '.Yii::app()->session['rewardPartnerId']);
+Yii::trace('User token : '.Yii::app()->session['userToken']);
+?>

@@ -39,17 +39,49 @@ class CampaignsController extends Controller
 		);
 	}
 
+	public function actionCreate()
+	{
+		$params = CJSON::encode($_POST['firstStep']);
+		$response = CJSON::decode(ServiceHelper::serviceCall($params,'createCampaign'));
+
+		if($response['result']==true){
+			$this->renderPartial('_stepTwo', array(
+				"campaignId"=>$response['data']['_id']
+			), false, true);
+		} else {
+			// error handling
+		}
+	}
+
 	public function actionAdd()
 	{
-		$data = array();
-		$data["formNo"] = $_POST['formNo'];
+		//$data = array();
+		//$data["formNo"] = $_POST['formNo'];
+		if(isset($_POST['data'])){
+			echo $_POST['data'];
+		}
 
-		$this->renderPartial('_addCampaign', $data, false, true);
+		if($_POST['formNo']==0){
+			$this->renderPartial('_addCampaign', 0, false, true);
+		} else {
+			//print_r($_POST['Location']);
+		}
+
 	}
 
 	public function actionCurrent()
 	{
-		$this->render('current');
+		$params = CJSON::encode(array(
+			'userToken' => Yii::app()->session['userToken'],
+			'rewardPartnerId' => Yii::app()->session['rewardPartnerId'],
+			'location' => -1
+		));
+
+		$response = CJSON::decode(ServiceHelper::serviceCall($params,'getCurrentCampaigns'));
+
+		$this->render('current',array(
+			'data'=>$response
+		));
 	}
 
 	public function actionScheduled()

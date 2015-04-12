@@ -6,6 +6,11 @@ $this->breadcrumbs=array(
 	'Current'
 );
 ?>
+<?php
+/*print('<pre>');
+print_r(ServiceHelper::getAreas());
+print('</pre>');*/
+?>
 <div class="portlet box">
 	<div class="portlet-body">
 		<div class="tabbable-line">
@@ -18,7 +23,15 @@ $this->breadcrumbs=array(
 				<div class="tab-pane active" id="tab_15_3">
 					<!-- BEGIN CAMPAIGN -->
 					<div class="row" style="margin-bottom: 15px;">
-						<div class="col-md-6"></div>
+						<div class="col-md-3">
+							<?php echo CHtml::dropDownList('Location','',array(
+								"Campaign1"=>"Location 1",
+								"Campaign2"=>"Location 2"
+							),array(
+								"class"=>"form-control"
+							)); ?>
+						</div>
+						<div class="col-md-3"></div>
 						<div class="col-md-6">
 							<?php  echo CHtml::ajaxButton ("Add Campaign",
 								CController::createUrl('campaigns/add'),
@@ -50,13 +63,18 @@ $this->breadcrumbs=array(
 						</div>
 					</div>
 					<div class="portlet light bg-inverse" onmouseover="showActions(this)" onmouseout="hideActions(this)">
+						<?php
+							print('<pre>');
+							print_r($data);
+							print('</pre>');
+						?>
 						<div class="portlet-title">
 							<div class="caption font-purple-plum">
 								<i class="icon-speech font-purple-plum"></i>
 								<span class="caption-subject bold uppercase"> Campaign 1</span>
 								<!--<span class="caption-helper">right click inside the box</span>-->
 							</div>
-							<div class="actions" style="display: none;">
+							<div class="actions" style="display: block;">
 								<a class="btn btn-circle btn-icon-only btn-default" href="#">
 									<i class="icon-pencil"></i>
 								</a>
@@ -71,8 +89,8 @@ $this->breadcrumbs=array(
 									<img style="border: 1px solid #ddd; padding: 4px;" src="http://www.placehold.it/150x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 								</div>
 								<div class="col-md-6">
-									Duis mollis, est non <br/>
-									Duis mollis, est non
+									<h5 class="block">mm/dd/yy to mm/dd/yy</h5>
+									<h5 class="block">Redeemed: xx/xx</h5>
 								</div>
 								<div class="pull-right">
 									<a href="#" class="pull-right btn btn-circle default yellow-stripe disabled">In Review</a>
@@ -82,14 +100,14 @@ $this->breadcrumbs=array(
 						</div>
 					</div>
 					<!-- END CAMPAIGN -->
-					<div class="portlet light bg-inverse">
+					<div class="portlet light bg-inverse" onmouseover="showActions(this)" onmouseout="hideActions(this)">
 						<div class="portlet-title">
 							<div class="caption font-purple-plum">
 								<i class="icon-speech font-purple-plum"></i>
-								<span class="caption-subject bold uppercase"> Campaign 2</span>
+								<span class="caption-subject bold uppercase"> Campaign 1</span>
 								<!--<span class="caption-helper">right click inside the box</span>-->
 							</div>
-							<div class="actions">
+							<div class="actions" style="display: block;">
 								<a class="btn btn-circle btn-icon-only btn-default" href="#">
 									<i class="icon-pencil"></i>
 								</a>
@@ -100,22 +118,28 @@ $this->breadcrumbs=array(
 						</div>
 						<div class="portlet-body">
 							<div id="context" data-toggle="context" data-target="#context-menu">
-								<p>
-									Duis mollis, est non
+								<div style="width: 160px; float: left;">
+									<img style="border: 1px solid #ddd; padding: 4px;" src="http://www.placehold.it/150x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+								</div>
+								<div class="col-md-6">
+									<h5 class="block">mm/dd/yy to mm/dd/yy</h5>
+									<h5 class="block">Redeemed: xx/xx</h5>
+								</div>
+								<div class="pull-right">
 									<a href="#" class="pull-right btn btn-circle default green-stripe disabled">Active</a>
-								</p>
+								</div>
+								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
-					<!-- End -->
-					<div class="portlet light bg-inverse">
+					<div class="portlet light bg-inverse" onmouseover="showActions(this)" onmouseout="hideActions(this)">
 						<div class="portlet-title">
 							<div class="caption font-purple-plum">
 								<i class="icon-speech font-purple-plum"></i>
-								<span class="caption-subject bold uppercase"> Campaign 3</span>
+								<span class="caption-subject bold uppercase"> Campaign 1</span>
 								<!--<span class="caption-helper">right click inside the box</span>-->
 							</div>
-							<div class="actions">
+							<div class="actions" style="display: block;">
 								<a class="btn btn-circle btn-icon-only btn-default" href="#">
 									<i class="icon-pencil"></i>
 								</a>
@@ -126,10 +150,17 @@ $this->breadcrumbs=array(
 						</div>
 						<div class="portlet-body">
 							<div id="context" data-toggle="context" data-target="#context-menu">
-								<p>
-									Duis mollis, est non
-									<a href="#" class="pull-right btn btn-circle default green-stripe disabled">Active</a>
-								</p>
+								<div style="width: 160px; float: left;">
+									<img style="border: 1px solid #ddd; padding: 4px;" src="http://www.placehold.it/150x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+								</div>
+								<div class="col-md-6">
+									<h5 class="block">mm/dd/yy to mm/dd/yy</h5>
+									<h5 class="block">Redeemed: xx/xx</h5>
+								</div>
+								<div class="pull-right">
+									<a href="#" class="pull-right btn btn-circle default yellow-stripe disabled">In Review</a>
+								</div>
+								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
