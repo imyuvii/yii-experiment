@@ -15,6 +15,9 @@
 <form action="#" class="form-horizontal" id="firstForm" style="margin-top: 20px;">
     <div class="wizard-forms" id="form0">
         <div class="form-body">
+            <div class="form-group error-group hide-this">
+                <lable class="label-danger" id="errorMessage"></lable>
+            </div>
             <div class="form-group">
                 <label class="col-md-4 control-label">Location</label>
                 <div class="col-md-4">
@@ -42,9 +45,9 @@
                     <div class="input-group input-medium date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
                         <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                             'name' => 'firstStep[startDate]',
-                            'value' => date('d-m-Y'),
+                            'value' => date('m/d/Y'),
                             'options'=>array(
-                                'dateFormat'=>'d-m-yy',
+                                'dateFormat'=>'m/d/yy',
                             ),
                             'htmlOptions' => array(
                                 "class"=>"form-control"
@@ -53,9 +56,9 @@
                         <span class="input-group-addon">to </span>
                         <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                             'name' => 'firstStep[endDate]',
-                            'value' => date('d-m-Y'),
+                            'value' => date('m/d/Y'),
                             'options'=>array(
-                                'dateFormat'=>'d-m-yy',
+                                'dateFormat'=>'m/d/Y',
                             ),
                             'htmlOptions' => array(
                                 "class"=>"form-control"
@@ -85,8 +88,18 @@
             url:'<?php echo CController::createUrl('campaigns/create') ?>',
             data:jQuery("#firstForm").serialize(),
             success:function(response){
-                //console.log(response);
-                jQuery("#campaignData").html(response);
+                try{
+                    var data = jQuery.parseJSON(response);
+                    if(data.result==false){
+                        jQuery(".error-group").removeClass('hide-this')
+                        jQuery("#errorMessage").html(data.errorDescription);
+                    }
+                } catch (e){
+                    jQuery("#campaignData").html(response);
+                }
+            },
+            error:function(response){
+                console.log('error')
             }
         });
     });

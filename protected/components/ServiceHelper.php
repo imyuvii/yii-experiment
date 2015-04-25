@@ -29,7 +29,12 @@ class ServiceHelper extends CApplicationComponent{
         $resp = curl_exec($curl);
         Yii::trace('Response: '.$resp);
         curl_close($curl);
-        return $resp;
+        $result = CJSON::decode($resp);
+        if($result['errorCode'] == 101){
+            //Yii::app()->request->redirect(array('rewardPartner/logout'));
+        } else {
+            return $resp;
+        }
     }
 
     public static function openServiceCall($params,$service)
@@ -86,7 +91,6 @@ class ServiceHelper extends CApplicationComponent{
         }
 
         return $areas;
-
         //echo json_decode($areas);
 
     }

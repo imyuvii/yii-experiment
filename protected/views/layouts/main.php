@@ -41,7 +41,7 @@
 						<?php
 						$this->widget('zii.widgets.CMenu',array(
 							'items'=>array(
-								array('label'=>'<i class="icon-user"></i> My Profile', 'url'=>array('/reports/')),
+								array('label'=>'<i class="icon-user"></i> My Profile', 'url'=>array('/rewardPartner/profile')),
 								array('label'=>'<i class="icon-key"></i> Change Password', 'url'=>array('/locations/')),
 								array('label'=>'<i class="icon-power"></i> Log out', 'url'=>array('/rewardPartner/logout')),
 								//array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
@@ -130,6 +130,7 @@
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap/js/bootstrap.min.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/jquery-validation/dist/jquery.validate.min.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/moment.min.js',CClientScript::POS_END);
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/jquery.form.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/daterangepicker.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/functions.js',CClientScript::POS_END);
 	?>

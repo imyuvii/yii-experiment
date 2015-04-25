@@ -1,105 +1,165 @@
-Select2
-=======
-[![Build Status][travis-ci-image]][travis-ci-status]
+ESelect2 is a widget extension for Yii framework. This extension is a wrapper for Select2 Jquery plugin ([https://github.com/ivaynberg/select2][1]).
 
-Select2 is a jQuery-based replacement for select boxes. It supports searching,
-remote data sets, and pagination of results.
+## Requirements ##
 
-To get started, checkout examples and documentation at
-https://select2.github.io/
+ - Yii 1.1 or above (tested on 1.1.10)
 
-Use cases
----------
-* Enhancing native selects with search.
-* Enhancing native selects with a better multi-select interface.
-* Loading data from JavaScript: easily load items via AJAX and have them
-  searchable.
-* Nesting optgroups: native selects only support one level of nesting. Select2
-  does not have this restriction.
-* Tagging: ability to add new items on the fly.
-* Working with large, remote datasets: ability to partially load a dataset based
-  on the search term.
-* Paging of large datasets: easy support for loading more pages when the results
-  are scrolled to the end.
-* Templating: support for custom rendering of results and selections.
+## Usage ##
 
-Browser compatibility
----------------------
-* IE 8+
-* Chrome 8+
-* Firefox 10+
-* Safari 3+
-* Opera 10.6+
+ - Extract the downloaded file to your application extensions directory
+ - Use it at your view
 
-Usage
+## Examples ##
+
+Basic
 -----
-You can source Select2 directly from a CDN like [JSDliver][jsdelivr] or
-[CDNJS][cdnjs], [download it from this GitHub repo][releases], or use one of
-the integrations below.
+```php
+$this->widget('ext.select2.ESelect2', array(
+ 'name' => 'selectInput',
+	'data' => array(
+		0 => 'Nol',
+		1 => 'Satu',
+		2 => 'Dua',
+	)
+));
+```
+Working with model
+------------------
+```php
+$this->widget('ext.select2.ESelect2', array(
+	'model' => $model,
+	'attribute' => 'attrName',
+	'data' => array(
+		0 => 'Nol',
+		1 => 'Satu',
+		2 => 'Dua',
+	),
+));
+```
+Using selector
+--------------
+```php
+$tags = array('Satu', 'Dua', 'Tiga');
+echo CHtml::textField('test', '', array('id' => 'test'));
+$this->widget('ext.select2.ESelect2', array(
+	'selector' => '#test',
+	'options' => array(
+		'tags' => $tags,
+	),
+));
+```
+Using `optgroup`
+----------------
+```php
+$data = array(
+	'one' => array(
+		'1' => 'Satu',
+		'2' => 'Dua',
+		'3' => 'Tiga',
+	),
+	'two' => array(
+		'4' => 'Sidji',
+		'5' => 'Loro',
+		'6' => 'Telu',
+	),
+	'three' => array(
+		'7' => 'Hiji',
+		'8' => 'Dua',
+		'9' => 'Tilu',
+	),
+);
 
-Integrations
-------------
-* [Wicket-Select2][wicket-select2] (Java / [Apache Wicket][wicket])
-* [select2-rails][select2-rails] (Ruby on Rails)
-* [AngularUI][angularui-select] ([AngularJS][angularjs])
-* [Django][django-select2]
-* [Symfony][symfony-select2]
-* [Symfony2][symfony2-select2]
-* [Bootstrap 2][bootstrap2-select2] and [Bootstrap 3][bootstrap3-select2]
-  (CSS skins)
-* [Meteor][meteor-select2] ([Bootstrap 3 skin][meteor-select2-bootstrap3])
-* [Meteor][meteor-select2-alt]
-* [Yii 2.x][yii2-select2]
-* [Yii 1.x][yii-select2]
-* [AtmosphereJS][atmospherejs-select2]
-
-Internationalization (i18n)
----------------------------
-Select2 supports multiple languages by simply including the right language JS
-file (`dist/js/i18n/it.js`, `dist/js/i18n/nl.js`, etc.) after
-`dist/js/select2.js`.
-
-Missing a language? Just copy `src/js/select2/i18n/en.js`, translate it, and
-make a pull request back to Select2 here on GitHub.
-
-Documentation
+$this->widget('ext.select2.ESelect2', array(
+	'name' => 'testing',
+	'data' => $data,
+));
+```
+Multiple data
 -------------
-The documentation for Select2 is available
-[through GitHub Pages][documentation] and is located within this repository
-in the [`docs` folder][documentation-folder].
+```php
+$data = array(
+	'1' => 'Satu',
+	'2' => 'Dua',
+	'3' => 'Tiga',
+);
 
-Community
----------
-You can find out about the different ways to get in touch with the Select2
-community at the [Select2 community page][community].
+$this->widget('ext.select2.ESelect2', array(
+	'name' => 'ajebajeb',
+	'data' => $data,
+	'htmlOptions' => array(
+		'multiple' => 'multiple',
+	),
+));
+```
+Placeholder
+-----------
+```php
+$this->widget('ext.select2.ESelect2', array(
+	'name' => 'asik2x',
+	'data' => $data,
+	'options' => array(
+		'placeholder' => Yii::t('select2', 'Keren ya?'),
+		'allowClear' => true,
+	),
+));
+```
+Working with remote data
+------------------------
+```php
+echo CHtml::textField('movieSearch', '', array('class' => 'span5'));
+$this->widget('ext.select2.ESelect2', array(
+	'selector' => '#movieSearch',
+	'options' => array(
+		'placeholder' => 'Search a movie',
+		'minimumInputLength' => 1,
+		'ajax' => array(
+			'url' => 'http://api.rottentomatoes.com/api/public/v1.0/movies.json',
+			'dataType' => 'jsonp',
+			'data' => 'js: function(term,page) {
+					return {
+						q: term, 
+						page_limit: 10,
+						apikey: "e5mnmyr86jzb9dhae3ksgd73" // Please create your own key!
+					};
+				}',
+			'results' => 'js: function(data,page){
+				return {results: data.movies};
+			}',
+		),
+		'formatResult' => 'js:function(movie){
+			var markup = "<table class=\"movie-result\"><tr>";
+			if (movie.posters !== undefined && movie.posters.thumbnail !== undefined) {
+				markup += "<td class=\"movie-image\"><img src=\"" + movie.posters.thumbnail + "\"/></td>";
+			}
+			markup += "<td class=\"movie-info\"><div class=\"movie-title\">" + movie.title + "</div>";
+			if (movie.critics_consensus !== undefined) {
+				markup += "<div class=\"movie-synopsis\">" + movie.critics_consensus + "</div>";
+			}
+			else if (movie.synopsis !== undefined) {
+				markup += "<div class=\"movie-synopsis\">" + movie.synopsis + "</div>";
+			}
+			markup += "</td></tr></table>";
+			return markup;
+		}',
+		'formatSelection' => 'js: function(movie) {
+			return movie.title;
+		}',
+	),
+));
+```
 
-Copyright and license
----------------------
-The license is available within the repository in the [LICENSE][license] file.
+## Resources ##
 
-[angularjs]: https://angularjs.org/
-[angularui-select]: http://angular-ui.github.io/#ui-select
-[atmospherejs-select2]: https://atmospherejs.com/package/jquery-select2
-[bootstrap2-select2]: https://github.com/t0m/select2-bootstrap-css
-[bootstrap3-select2]: https://github.com/t0m/select2-bootstrap-css/tree/bootstrap3
-[cdnjs]: http://www.cdnjs.com/libraries/select2
-[community]: https://select2.github.io/community.html
-[django-select2]: https://github.com/applegrew/django-select2
-[documentation]: https://select2.github.io/
-[documentation-folder]: https://github.com/select2/select2/tree/master/docs
-[freenode]: https://freenode.net/
-[jsdelivr]: http://www.jsdelivr.com/#!select2
-[license]: LICENSE.md
-[meteor-select2]: https://github.com/nate-strauser/meteor-select2
-[meteor-select2-alt]: https://jquery-select2.meteor.com
-[meteor-select2-bootstrap3]: https://github.com/esperadomedia/meteor-select2-bootstrap3-css/
-[releases]: https://github.com/select2/select2/releases
-[select2-rails]: https://github.com/argerim/select2-rails
-[symfony-select2]: https://github.com/19Gerhard85/sfSelect2WidgetsPlugin
-[symfony2-select2]: https://github.com/avocode/FormExtensions
-[travis-ci-image]: https://travis-ci.org/select2/select2.svg?branch=select2-ng
-[travis-ci-status]: https://travis-ci.org/select2/select2
-[wicket]: http://wicket.apache.org
-[wicket-select2]: https://github.com/ivaynberg/wicket-select2
-[yii-select2]: https://github.com/tonybolzan/yii-select2
-[yii2-select2]: http://demos.krajee.com/widgets#select2
+ - Jquery extension URL:
+ - [https://github.com/ivaynberg/select2][2]
+ - Demo [http://ivaynberg.github.com/select2/][3]
+ - Yii extension URL:
+ - [http://www.yiiframework.com/extension/select2/][5]
+ - [https://github.com/anggiaj/ESelect2][5]
+
+
+  [1]: https://github.com/ivaynberg/select2
+  [2]: https://github.com/ivaynberg/select2
+  [3]: http://ivaynberg.github.com/select2/
+  [4]: http://www.yiiframework.com/extension/select2/
+  [5]: https://github.com/anggiaj/ESelect2

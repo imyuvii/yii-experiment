@@ -17,7 +17,8 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		'ext.rezvan.*'
+		'ext.rezvan.*',
+		'ext.select2.*'
 		// 'ext.select2.Select2'
 	),
 
@@ -40,6 +41,14 @@ return array(
 			'loginUrl'=>array('rewardPartner/login')
 		),
 
+		'clientScript'=>array(
+			'packages'=>array(
+				'jquery'=>array(
+					'baseUrl'=>'http://ajax.googleapis.com/ajax/libs/jquery/',
+					'js'=>array('2.1.3/jquery.min.js'),
+				)
+			),
+		),
 		// uncomment the following to enable URLs in path-format
 
 		'urlManager'=>array(

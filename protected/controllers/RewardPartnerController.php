@@ -6,7 +6,7 @@ class RewardPartnerController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/login';
+	public $layout='//layouts/main';
 
 	/**
 	 * @return array action filters
@@ -32,7 +32,7 @@ class RewardPartnerController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','profile'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -63,6 +63,7 @@ class RewardPartnerController extends Controller
 
 	public function actionRegister()
 	{
+		$this->layout = 'login';
 		//$model=new rewardPartner;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -109,6 +110,7 @@ class RewardPartnerController extends Controller
 	 * Forgot password form
 	 * */
 	public function actionForgotPassword(){
+		$this->layout = 'login';
 		if(isset($_POST['forgotPassword'])){
 			Yii::trace($_POST['forgotPassword']['email']);
 		}
@@ -120,6 +122,7 @@ class RewardPartnerController extends Controller
 	 */
 	public function actionLogin()
 	{
+		$this->layout = 'login';
 		$model=new LoginForm;
 
 		// if it is ajax validation request
@@ -142,6 +145,23 @@ class RewardPartnerController extends Controller
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));
+	}
+
+	/**
+	 * Logs out the current user and redirect to homepage.
+	 */
+	public function actionProfile(){
+		$params = CJSON::encode(array(
+			'userToken' => Yii::app()->session['userToken'],
+			'rewardPartnerId' => Yii::app()->session['rewardPartnerId'],
+			'_id' => Yii::app()->session['rewardPartnerId']
+		));
+
+		$response = CJSON::decode(ServiceHelper::serviceCall($params,'getRewardPartnerById'));
+
+		$this->render('profile',array(
+			'data'=>$response
+		));
 	}
 
 	/**

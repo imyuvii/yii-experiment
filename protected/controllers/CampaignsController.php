@@ -26,7 +26,7 @@ class CampaignsController extends Controller
 				'users'=>array('*'),
 			),*/
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','current','scheduled','previous','add'),
+				'actions'=>array('create','update','current','scheduled','previous','add','stepThree'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -48,9 +48,19 @@ class CampaignsController extends Controller
 			$this->renderPartial('_stepTwo', array(
 				"campaignId"=>$response['data']['_id']
 			), false, true);
+			/*echo CJSON::encode(array(
+				'result'=>true,
+				'data'=>$nextStep
+			));*/
 		} else {
-			// error handling
+			echo CJSON::encode($response);
 		}
+	}
+
+	public function actionStepThree(){
+		$this->renderPartial('_stepThree',array(
+			"campaignId"=>$_POST['_id']
+		));
 	}
 
 	public function actionAdd()
@@ -74,6 +84,7 @@ class CampaignsController extends Controller
 		$params = CJSON::encode(array(
 			'userToken' => Yii::app()->session['userToken'],
 			'rewardPartnerId' => Yii::app()->session['rewardPartnerId'],
+			'index'=>0,
 			'location' => -1
 		));
 
