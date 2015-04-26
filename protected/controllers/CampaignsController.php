@@ -26,7 +26,7 @@ class CampaignsController extends Controller
 				'users'=>array('*'),
 			),*/
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','current','scheduled','previous','add','stepThree'),
+				'actions'=>array('create','update','current','scheduled','previous','add','stepThree','stepFourth'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -63,10 +63,14 @@ class CampaignsController extends Controller
 		));
 	}
 
+	public function actionStepFourth(){
+		$this->renderPartial('_stepFourth',array(
+			"campaignCode"=>"ABC125258"
+		));
+	}
+
 	public function actionAdd()
 	{
-		//$data = array();
-		//$data["formNo"] = $_POST['formNo'];
 		if(isset($_POST['data'])){
 			echo $_POST['data'];
 		}
@@ -76,7 +80,6 @@ class CampaignsController extends Controller
 		} else {
 			//print_r($_POST['Location']);
 		}
-
 	}
 
 	public function actionCurrent()

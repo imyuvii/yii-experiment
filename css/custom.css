@@ -29,3 +29,7 @@ label.error{
 .ui-datepicker {
 	z-index: 100000 !important;
 }
+
+.hide-this{
+	display: none;
+}

@@ -11,7 +11,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title" id="myModalLabel">Add Campaign - Step 2</h4>
 </div>
-<form action="<?php echo $url = Yii::app()->params['serviceUrl'] ?>updateReward" method="POST" class="form-horizontal" id="stepTwoForm" enctype="multipart/form-data" style="margin-top: 20px;">
+<form method="POST" class="form-horizontal" id="stepTwoForm" enctype="multipart/form-data" style="margin-top: 20px;">
     <div class="wizard-forms">
         <div class="form-body">
             <div class="form-group">
@@ -35,34 +35,14 @@
                 <label class="col-md-4 control-label">Offer Duration</label>
                 <div class="col-md-4">
                     <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                        <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                            'name' => 'startDate',
-                            'value' => date('m/d/Y'),
-                            'options'=>array(
-                                'dateFormat'=>'m/d/yy',
-                            ),
-                            'htmlOptions' => array(
-                                "class"=>"form-control"
-                            ),
-                        )); ?>
-                        <span class="input-group-addon">to </span>
-                        <?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                            'name' => 'endDate',
-                            'value' => date('m/d/Y'),
-                            'options'=>array(
-                                'dateFormat'=>'m/d/yy',
-                            ),
-                            'htmlOptions' => array(
-                                "class"=>"form-control"
-                            ),
-                        )); ?>
-                    </div>
+                        <input class="form-control hasDatepicker" id="startDate" type="text" value="04/26/2015" name="startDate">                        <span class="input-group-addon">to </span>
+                        <input class="form-control hasDatepicker" id="endDate" type="text" value="04/26/2015" name="endDate">                    </div>
                     <!-- /input-group -->
                     <span class="help-block">Select date range </span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label"></label>
+                <label class="col-md-4 control-label">Medal</label>
                 <div class="col-md-4">
                     <?php echo CHtml::dropDownList('medal','',array(
                         50=>50,
@@ -71,10 +51,6 @@
                         500=>'500+'
                     ),array(
                         "class"=>"form-control"
-                    )); ?>
-                    <?php echo CHtml::textField('medal','',array(
-                        "class"=>"form-control",
-                        "placeholder"=>"Input 0 for unlimited"
                     )); ?>
                 </div>
             </div>
@@ -101,15 +77,11 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Category</label>
                 <div class="col-md-4">
-                    <?php $this->widget('ext.select2.ESelect2',array(
-                        'name'=>'categoryId',
-                        'data'=>json_decode(ServiceHelper::getCategories()),
-                        'htmlOptions'=>array(
+                    <?php
+                        echo CHtml::dropDownList('categoryId','',json_decode(ServiceHelper::getCategories()),array(
                             'multiple'=>'multiple',
-                            "class"=>"form-control"
-                        ),
-                    )); ?>
-
+                        ));
+                    ?>
                 </div>
             </div>
 
@@ -125,8 +97,8 @@
         </div>
         <div class="modal-footer">
             <?php
-                echo CHtml::textField('_id',$campaignId);
-                echo CHtml::textField('userToken',Yii::app()->session['userToken']);
+                echo CHtml::hiddenField('_id',$campaignId);
+                echo CHtml::hiddenField('userToken',Yii::app()->session['userToken']);
                 //echo CHtml::hiddenField('rewardPartnerId',Yii::app()->session['rewardPartnerId']);
             ?>
             <?php echo CHtml::Button("Previous",
@@ -138,8 +110,8 @@
             <?php echo CHtml::submitButton("Next",
                 array(
                     'class'=>'btn btn-primary',
-                    'id'=>'stepTwoAjaxLink'
-                    //'onclick'=>'formWizard(2);'
+                    'id'=>'stepTwoAjaxLink',
+                    'onclick'=>'blockThisElement("#campaignData");'
                 ));
             ?>
             <?php /*  echo CHtml::ajaxButton ("Next",
@@ -158,22 +130,34 @@
     </div>
 </form>
 <script type="text/javascript">
-    jQuery("#stepTwoForm").ajaxForm(function(response){
-        if(response.result==true){
-            jQuery.ajax({
-                type:'POST',
-                url:'<?php echo Yii::app()->createUrl('campaigns/stepThree'); ?>',
-                data:{
-                    '_id':response.data._id
-                },
-                success:function(resp){
-                    console.log(resp);
-                    jQuery("#campaignData").html(resp);
-                }
-            });
-        } else {
-            alert('false');
-            // error handling
+    //unBlockThisElement("#campaignData");
+    jQuery( "#startDate").datepicker();
+    jQuery( "#endDate").datepicker();
+    //beforeSubmit
+    jQuery("#stepTwoForm").ajaxForm({
+        url: '<?php echo $url = Yii::app()->params['serviceUrl'] ?>updateReward',
+        success: function(response) {
+            if(response.result==true){
+                jQuery.ajax({
+                    type:'POST',
+                    url:'<?php echo Yii::app()->createUrl('campaigns/stepThree'); ?>',
+                    data:{
+                        '_id':response.data._id
+                    },
+                    success:function(resp){
+                        jQuery("#campaignData").html(resp);
+                    },
+                    beforeSend:function(){
+                        blockThisElement("#campaignData");
+                    }
+                });
+            } else {
+                unBlockThisElement("#campaignData");
+                errorMessage('error',response.errorDescription,response.errorCode);
+            }
+        },
+        beforeSubmit:function(){
+            blockThisElement("#campaignData");
         }
     });
 </script>

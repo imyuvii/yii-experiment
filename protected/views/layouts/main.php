@@ -15,6 +15,7 @@
 		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/custom.css');
 		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/components-rounded.css');
 		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css');
+		Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/plugins/bower_components/toastr/toastr.css');
 	?>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
@@ -131,8 +132,11 @@
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/jquery-validation/dist/jquery.validate.min.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/moment.min.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/jquery.form.js',CClientScript::POS_END);
-		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/daterangepicker.js',CClientScript::POS_END);
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bower_components/toastr/toastr.min.js',CClientScript::POS_END);
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bower_components/blockui/jquery.blockUI.js',CClientScript::POS_END);
+		//Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/plugins/bootstrap-daterangepicker/daterangepicker.js',CClientScript::POS_END);
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/functions.js',CClientScript::POS_END);
+
 	?>
 </div>
 </body>

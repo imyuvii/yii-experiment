@@ -68,6 +68,7 @@ print('</pre>');*/
 							print_r($data);
 							print('</pre>');
 						?>
+
 						<div class="portlet-title">
 							<div class="caption font-purple-plum">
 								<i class="icon-speech font-purple-plum"></i>
@@ -169,3 +170,10 @@ print('</pre>');*/
 		</div>
 	</div>
 </div>
+<?php
+	Yii::app()->clientScript->registerCssFile(
+		Yii::app()->clientScript->getCoreScriptUrl().
+		'/jui/css/base/jquery-ui.css'
+	);
+	Yii::app()->clientScript->registerCoreScript('jquery.ui');
+?>

@@ -18,7 +18,8 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'ext.rezvan.*',
-		'ext.select2.*'
+		'ext.select2.*',
+		'ext.chosen.*'
 		// 'ext.select2.Select2'
 	),
 

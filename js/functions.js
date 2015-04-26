@@ -48,3 +48,51 @@ function formWizard(id){
     jQuery(".wizard-forms").css("display","none");
     jQuery(formId).fadeIn();
 }
+
+function errorMessage(errorType,message,errorCode){
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    switch(errorType){
+        case 'info':
+            toastr.info(message,errorCode);
+            break;
+        case 'warning':
+            toastr.warning(message,errorCode);
+            break;
+        case 'error':
+            toastr.error(message,errorCode);
+            break;
+        case 'success':
+            toastr.success(message,errorCode);
+            break;
+    }
+}
+
+function blockThisElement(elementId){
+    jQuery(elementId).block({
+        message:'<div class="loading-message loading-message-boxed"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp;&nbsp;LOADING...</span></div>',
+        css:{
+            border: 'none',
+            backgroundColor: 'none'
+        }
+    });
+}
+
+function unBlockThisElement(elementId){
+    jQuery(elementId).unblock();
+}

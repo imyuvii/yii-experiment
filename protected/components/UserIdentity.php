@@ -30,7 +30,7 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		} elseif($response->result==true){
 			Yii::app()->session['userToken'] = $response->rewardPartnerUserData->authToken;
-			Yii::app()->session['rewardPartnerId'] = $response->rewardPartnerUserData->_id;
+			Yii::app()->session['rewardPartnerId'] = $response->rewardPartnerUserData->rewardPartnerCollection[0]->_id;
 			Yii::app()->session['loggedInUser'] = $response->rewardPartnerUserData->firstName.' '.$response->rewardPartnerUserData->lastName;
 			//Yii::trace('session: '.Yii::app()->session['userToken']);
 			$this->errorCode=self::ERROR_NONE;
