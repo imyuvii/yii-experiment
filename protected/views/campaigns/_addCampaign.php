@@ -22,7 +22,7 @@
                 <label class="col-md-4 control-label">Location</label>
                 <div class="col-md-4">
                     <?php echo CHtml::dropDownList('firstStep[pickUpSpots]','',ServiceHelper::getAreas(),array(
-                        "class"=>"form-control",
+                        "class"=>"form-control chosen",
                         "multiple"=>"multiple",
                         "id"=>"location"
                     )); ?>
@@ -45,9 +45,9 @@
                 <label class="col-md-4 control-label">Campaign Duration</label>
                 <div class="col-md-4">
                     <div class="input-group input-medium date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                        <input class="form-control hasDatepicker" id="firstStep_startDate" type="text" value="04/26/2015" name="firstStep[startDate]">
+                        <input class="form-control" id="firstStep_startDate" type="text" value="<?php echo date('m/d/Y'); ?>" name="firstStep[startDate]">
                         <span class="input-group-addon">to </span>
-                        <input class="form-control hasDatepicker" id="firstStep_endDate" type="text" value="04/26/2015" name="firstStep[endDate]">
+                        <input class="form-control" id="firstStep_endDate" type="text" value="<?php echo date('m/d/Y'); ?>" name="firstStep[endDate]">
                     </div>
                     <span class="help-block">Select date range </span>
                 </div>
@@ -66,6 +66,9 @@
     </div>
 </form>
 <script type="text/javascript">
+    $(".chosen").chosen();
+    $("#firstStep_startDate").datepicker();
+    $("#firstStep_endDate").datepicker();
     jQuery('#ajaxLink').click(function(){
         jQuery.ajax({
             type:'post',

@@ -113,6 +113,9 @@ class ServiceHelper extends CApplicationComponent{
             case 'Invoices':
                 $icon = 'note';
                 break;
+            case 'Verification':
+                $icon = 'check';
+                break;
         }
         if($name == ucfirst(Yii::app()->controller->id)){
             return "<i class='icon-$icon'></i><span class='title'>$name</span><span class='selected'></span>";

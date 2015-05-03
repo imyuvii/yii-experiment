@@ -26,7 +26,7 @@ class CampaignsController extends Controller
 				'users'=>array('*'),
 			),*/
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','current','scheduled','previous','add','stepThree','stepFourth'),
+				'actions'=>array('create','update','current','scheduled','previous','add','stepThree','stepFourth','byArea'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -82,6 +82,25 @@ class CampaignsController extends Controller
 		}
 	}
 
+	public function actionByArea(){
+		echo $params = CJSON::encode(array(
+			'userToken' => Yii::app()->session['userToken'],
+			'rewardPartnerId' => Yii::app()->session['rewardPartnerId'],
+			//'index'=>0,
+			'location' => $_POST['campaignArea']
+		));
+
+		$response = CJSON::decode(ServiceHelper::serviceCall($params,'getCampaignListByLocation'));
+
+		print('<pre>');
+		print_r($response);
+		print('</pre>');
+
+//		$this->render('current',array(
+//			'data'=>$response
+//		));
+	}
+
 	public function actionCurrent()
 	{
 		$params = CJSON::encode(array(
@@ -100,12 +119,34 @@ class CampaignsController extends Controller
 
 	public function actionScheduled()
 	{
-		$this->render('scheduled');
+		$params = CJSON::encode(array(
+			'userToken' => Yii::app()->session['userToken'],
+			'rewardPartnerId' => Yii::app()->session['rewardPartnerId'],
+			'index'=>0,
+			'location' => -1
+		));
+
+		$response = CJSON::decode(ServiceHelper::serviceCall($params,'getScheduledCampaigns'));
+
+		$this->render('current',array(
+			'data'=>$response
+		));
 	}
 
 	public function actionPrevious()
 	{
-		$this->render('previous');
+		$params = CJSON::encode(array(
+			'userToken' => Yii::app()->session['userToken'],
+			'rewardPartnerId' => Yii::app()->session['rewardPartnerId'],
+			'index'=>0,
+			'location' => -1
+		));
+
+		$response = CJSON::decode(ServiceHelper::serviceCall($params,'getPreviousCampaigns'));
+
+		$this->render('current',array(
+			'data'=>$response
+		));
 	}
 
 	// Uncomment the following methods and override them if needed

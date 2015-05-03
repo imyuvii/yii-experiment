@@ -68,6 +68,7 @@
 				$this->widget('zii.widgets.CMenu',array(
 					'items'=>array(
 						/*array('label'=>'<i class="icon-home"></i><span class="title">Dashboard</span>', 'url'=>array('/site/index')),*/
+						array('label'=>ServiceHelper::cMenuName('Verification'), 'url'=>array('/coupons/verification')),
 						array('label'=>ServiceHelper::cMenuName('Campaigns'), 'url'=>array('/campaigns/current')),
 						array('label'=>ServiceHelper::cMenuName('Reports'), 'url'=>array('/reports/index')),
 						array('label'=>ServiceHelper::cMenuName('Locations'), 'url'=>array('/locations/index')),
@@ -95,10 +96,7 @@
 		<div class="page-content-wrapper">
 			<div class="page-content">
 				<h3 class="page-title">
-					<?php
-						$explodeString = explode(" - ", $this->pageTitle);
-						echo (isset($explodeString[1]))?$explodeString[1]:'Dashboard';
-					?>
+					<?php echo $this->pageTitle; ?>
 				</h3>
 				<div class="page-bar">
 					<?php if(isset($this->breadcrumbs)):?>

@@ -35,8 +35,8 @@
                 <label class="col-md-4 control-label">Offer Duration</label>
                 <div class="col-md-4">
                     <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                        <input class="form-control hasDatepicker" id="startDate" type="text" value="04/26/2015" name="startDate">                        <span class="input-group-addon">to </span>
-                        <input class="form-control hasDatepicker" id="endDate" type="text" value="04/26/2015" name="endDate">                    </div>
+                        <input class="form-control" id="startDate" type="text" value="<?php echo date('m/d/Y'); ?>" name="startDate">                        <span class="input-group-addon">to </span>
+                        <input class="form-control" id="endDate" type="text" value="<?php echo date('m/d/Y'); ?>" name="endDate">                    </div>
                     <!-- /input-group -->
                     <span class="help-block">Select date range </span>
                 </div>
@@ -80,6 +80,7 @@
                     <?php
                         echo CHtml::dropDownList('categoryId','',json_decode(ServiceHelper::getCategories()),array(
                             'multiple'=>'multiple',
+                            'class'=>'chosen'
                         ));
                     ?>
                 </div>
@@ -131,8 +132,9 @@
 </form>
 <script type="text/javascript">
     //unBlockThisElement("#campaignData");
-    jQuery( "#startDate").datepicker();
-    jQuery( "#endDate").datepicker();
+    $(".chosen").chosen();
+    jQuery("#startDate").datepicker();
+    jQuery("#endDate").datepicker();
     //beforeSubmit
     jQuery("#stepTwoForm").ajaxForm({
         url: '<?php echo $url = Yii::app()->params['serviceUrl'] ?>updateReward',
